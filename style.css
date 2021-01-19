@@ -1,0 +1,27 @@
+.header{
+    display:block;
+    background-color: rgb(143, 137, 137);
+    opacity:0.7;
+    position: relative;
+    max-width:1200px;
+    font-size: 60px;    
+}
+
+.bear{
+    float:right;
+    position: absolute;
+    top:10px;
+    right:400px;
+}
+.login{
+   height:40px;
+   line-height: 40px;
+}
+
+.edit{
+    display: block;
+    position: absolute;
+    bottom: 258px;
+    right:360px;
+
+}
