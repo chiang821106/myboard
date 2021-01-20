@@ -116,13 +116,18 @@ if (!isset($_SESSION['loginMember']) || ($_SESSION['loginMember'] == "")) {
 
                     <td align="right" class="col">
                         <p>
-                            <?php if ($num_pages > 1) { // 若不是第一頁則顯示 
-                            ?>
-                                <a class="text-danger" href="?page=1">第一頁</a> & <a class="text-primary" href="?page=<?php echo $num_pages - 1; ?>">上一頁</a>
+                            <?php if ($num_pages == 1) { // 第一頁則顯示 ?>
+                                <a class="text-light btn btn-info" href="#"style="visibility:hidden">擴充用</a>
+                                <a class="text-light btn btn-info" href="#"style="visibility:hidden">擴充用</a>
+                                <a class="text-light btn btn-info" href="?page=<?php echo $num_pages + 1; ?>">下一頁</a>
+                                <a class="text-light btn btn-info" href="?page=<?php echo $total_pages; ?>">最末頁</a> 
+                            <?php }else if($num_pages > 1){ // 若不是第一頁則顯示?>
+                                <a class="text-light btn btn-info" href="?page=1">第一頁</a> 
+                                <a class="text-light btn btn-info " href="?page=<?php echo $num_pages - 1; ?>">上一頁</a>
                             <?php } ?>
-                            <?php if ($num_pages < $total_pages) { // 若不是最後一頁則顯示 
-                            ?>
-                                <a class="text-danger" href="?page=<?php echo $num_pages + 1; ?>">下一頁</a> & <a class="text-primary" href="?page=<?php echo $total_pages; ?>">最末頁</a>
+                            <?php if ($num_pages < $total_pages && $num_pages != 1) { // 若不是最後一頁則顯示 ?>  
+                                <a class="text-light btn btn-info" href="?page=<?php echo $num_pages + 1; ?>">下一頁</a>
+                                <a class="text-light btn btn-info" href="?page=<?php echo $total_pages; ?>">最末頁</a>
                             <?php } ?>
                         </p>
                     </td>
@@ -284,7 +289,8 @@ if (!isset($_SESSION['loginMember']) || ($_SESSION['loginMember'] == "")) {
                         $("#myAddModal").modal("hide");
                         alert('留言成功!');
                         // 重整畫面
-                        window.history.go(0);
+                        // window.history.go(0);
+                        location.href='index.php?page=1';
                     })
                 } else if (document.myForm.boardname.value == "") {
                     alert("請輸入姓名!");
