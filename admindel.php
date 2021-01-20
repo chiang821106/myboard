@@ -48,6 +48,15 @@ $stmt->fetch();
         <img class="bear" src="images/小熊維尼.gif" alt="" width="49" height="69">
         <strong class="header">留言版後台</strong>
     </div>
+
+    <table width="90%" border="0" align="center" cellpadding="4" cellspacing="0" class="table table-success table-striped" style="max-width:1200px;">
+        <tr>
+            <td>
+                <a href="?logout=true" class=" btn btn-success" id="admin" style=" height:50px;line-height:30px;">管理員登出</p>
+            </td>
+        </tr>
+    </table>
+
     <form name="form1" method="post" action="">
         <table width="90%" border="0" align="center" class="table table-success table-striped" style="max-width:1200px;" cellpadding="4" cellspacing="0">
             <tr>
@@ -80,13 +89,7 @@ $stmt->fetch();
         </table>
     </form>
 
-    <table width="90%" border="0" align="center" cellpadding="4" cellspacing="0" class="table table-success table-striped" style="max-width:1200px;">
-        <tr>
-            <td>
-                <a href="?logout=true" class=" btn btn-success" id="admin" style=" height:50px;line-height:30px;">管理員登出</p>
-            </td>
-        </tr>
-    </table>
+    
 </body>
 
 </html>

@@ -73,7 +73,7 @@ $total_pages = ceil($total_records / $pageRow_records);
                     <a href="?logout=true" class=" btn btn-success" id="admin" style="height:45px;line-height:30px;">管理員登出</p>
                 </td>
 
-                <td class="col" style="display:none;">
+                <td class="col"style="font-size:20px;">
                     <p align="center">資料筆數：<?php echo $total_records; ?></p>
                 </td>
 
