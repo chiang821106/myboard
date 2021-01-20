@@ -153,6 +153,11 @@ if (!isset($_SESSION['loginMember']) || ($_SESSION['loginMember'] == "")) {
                     <td>
                         <span class="heading" style="font-size:22px;">
                             <font style="font-size:24px;color:blue;">主題: </font><?php echo $row_RecBoard["boardsubject"]; ?>
+                            <?php if($row_RecBoard["checked"] == "1") {; ?>
+                                <img align="right" src="images/love.gif" alt="已讀"width="35"height="35">
+                            <?php }else{ ?>
+                                <img align="right" src="images/unlove.gif" alt="未已讀"width="35"height="35">
+                            <?php } ?>
                         </span>
                         <hr>
                         <p><?php echo nl2br($row_RecBoard["boardcontent"]); ?></p>

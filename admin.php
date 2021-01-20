@@ -73,23 +73,26 @@ $total_pages = ceil($total_records / $pageRow_records);
                     <td class="col">
                         <a href="?logout=true" class="btn btn-success" id="admin" style="height:45px;line-height:30px;">管理員登出</p>
                     </td>
-                    
+
                     <td class="col" style="font-size:20px;position:relative;">
-                        <p align="left"style="">目前資料筆數：<?php echo $total_records; ?></p>
+                        <p align="left" style="">目前資料筆數：<?php echo $total_records; ?></p>
                     </td>
 
                     <td align="right" class="col">
                         <p>
-                            <?php if ($num_pages == 1) { // 第一頁則顯示 ?>
-                                <a class="text-light btn btn-info" href="#"style="visibility:hidden">擴充用</a>
-                                <a class="text-light btn btn-info" href="#"style="visibility:hidden">擴充用</a>
+                            <?php if ($num_pages == 1) { // 第一頁則顯示 
+                            ?>
+                                <a class="text-light btn btn-info" href="#" style="visibility:hidden">擴充用</a>
+                                <a class="text-light btn btn-info" href="#" style="visibility:hidden">擴充用</a>
                                 <a class="text-light btn btn-info" href="?page=<?php echo $num_pages + 1; ?>">下一頁</a>
-                                <a class="text-light btn btn-info" href="?page=<?php echo $total_pages; ?>">最末頁</a> 
-                            <?php }else if($num_pages > 1){ // 若不是第一頁則顯示?>
-                                <a class="text-light btn btn-info" href="?page=1">第一頁</a> 
+                                <a class="text-light btn btn-info" href="?page=<?php echo $total_pages; ?>">最末頁</a>
+                            <?php } else if ($num_pages > 1) { // 若不是第一頁則顯示
+                            ?>
+                                <a class="text-light btn btn-info" href="?page=1">第一頁</a>
                                 <a class="text-light btn btn-info " href="?page=<?php echo $num_pages - 1; ?>">上一頁</a>
                             <?php } ?>
-                            <?php if ($num_pages < $total_pages && $num_pages != 1) { // 若不是最後一頁則顯示 ?>  
+                            <?php if ($num_pages < $total_pages && $num_pages != 1) { // 若不是最後一頁則顯示 
+                            ?>
                                 <a class="text-light btn btn-info" href="?page=<?php echo $num_pages + 1; ?>">下一頁</a>
                                 <a class="text-light btn btn-info" href="?page=<?php echo $total_pages; ?>">最末頁</a>
                             <?php } ?>
@@ -117,6 +120,15 @@ $total_pages = ceil($total_records / $pageRow_records);
                     <td>
                         <span style="font-size:22px;">
                             <font style="font-size:24px;color:blue;">主題: </font><?php echo $row_RecBoard["boardsubject"]; ?>
+                            <?php if ($row_RecBoard["checked"] == "1") {; ?>
+                                <button align="right" class="btn btn-light checked" data-id="<?php echo $row_RecBoard["boardid"] ?>">
+                                    <img src="images/love.gif" alt="已讀愛心" width="35" height="35">
+                                </button>
+                            <?php } else {; ?>
+                                <button align="right" class="btn btn-light check" data-id="<?php echo $row_RecBoard["boardid"] ?>">
+                                    <img src="images/unlove.gif" alt="未讀愛心" width="35" height="35">
+                                </button>
+                            <?php } ?>
                         </span>
                         <hr>
                         <p><?php echo nl2br($row_RecBoard["boardcontent"]); ?></p>
@@ -130,6 +142,43 @@ $total_pages = ceil($total_records / $pageRow_records);
             </table>
         <?php } ?>
     </content>
+
+
+    <script>
+        $(document).ready(function() {
+
+            $(".checked").click(function(){
+                alert("已經已讀囉!");
+            })
+
+
+            $('.check').click(function() {
+                var ele = $(this);
+                //抓取boardid-------
+                var boardid = ele.attr("data-id");
+                // alert(boardid);
+                // alert(ele.attr("data-id"));
+                if (confirm("是否標註為已讀?")) {
+                    jQuery.ajax({
+                        url: 'checked.php?id=' + boardid,
+                        method: 'post',
+                        data: {
+                            boardid
+                        },
+                        success: function() {
+                            alert('已經標註已讀!');
+                            // 重整畫面
+                            // window.history.go(0);
+                            location.href = 'checked.php';
+                        },
+                        error: function() {
+                            alert('fail');
+                        }
+                    })
+                }
+            })
+        })
+    </script>
 
 </body>
 
