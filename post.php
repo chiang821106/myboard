@@ -1,5 +1,6 @@
 <?php
 
+// 接收前端傳遞的值
 $boardname = $_POST['boardname'];
 $boardsex = $_POST['boardsex'];
 $boardsubject = $_POST['boardsubject'];
@@ -16,8 +17,6 @@ $stmt->bind_param(
 $stmt->execute();
 $stmt->close();
 $db_link->close();
-// 重新導向回到主畫面
-// header("Location: index.php");
 
 ?>
 

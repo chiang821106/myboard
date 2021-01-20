@@ -19,6 +19,7 @@ if (isset($_POST['action']) && ($_POST['action'] == 'delete')) {
     //返回後台區
     header("Location:admin.php");
 }
+// 根據boardid查詢該筆資料
 $query_RecBoard = "SELECT boardid,boardname,boardsex,boardsubject,boardcontent FROM board WHERE boardid=?";
 $stmt = $db_link->prepare($query_RecBoard);
 $stmt->bind_param("i", $_GET['id']);
@@ -44,52 +45,57 @@ $stmt->fetch();
 </head>
 
 <body>
-    <div align="center">
-        <img class="bear" src="images/小熊維尼.gif" alt="" width="49" height="69">
-        <strong class="header">留言版後台</strong>
-    </div>
+    <!-- 頁首 -->
+    <header>
+        <div align="center">
+            <img class="bear" src="images/小熊維尼.gif" alt="" width="49" height="69">
+            <strong class="header">留言版後台</strong>
+        </div>
 
-    <table width="90%" border="0" align="center" cellpadding="4" cellspacing="0" class="table table-success table-striped" style="max-width:1200px;">
-        <tr>
-            <td>
-                <a href="?logout=true" class=" btn btn-success" id="admin" style=" height:50px;line-height:30px;">管理員登出</p>
-            </td>
-        </tr>
-    </table>
-
-    <form name="form1" method="post" action="">
-        <table width="90%" border="0" align="center" class="table table-success table-striped" style="max-width:1200px;" cellpadding="4" cellspacing="0">
+        <table border="0" align="center" cellpadding="4" cellspacing="0" class="table table-success table-striped" style="max-width:1200px;">
             <tr>
-                <td colspan="2" align="center" style="font-size:24px;color:blue;">刪除訪客留言版資料</td>
-            </tr>
-            <tr valign="top">
                 <td>
-                    <p>
-                        <strong>姓名</strong>：<?php echo $boardname; ?>&nbsp;&nbsp;&nbsp;
-                        <strong>性別</strong>：<?php echo $boardsex; ?>
-                    </p>
-                    <p>
-                        <strong>標題</strong>：<?php echo $boardsubject; ?>
-                    </p>
-                    <p>
-                        <strong>內容</strong>：<?php echo nl2br($boardcontent); ?>
-                    </p>
-                </td>
-            </tr>
-            <tr valign="top">
-                <td align="center">
-                    <p>
-                        <input name="boardid" type="hidden" id="boardid" value="<?php echo $boardid; ?>">
-                        <input name="action" type="hidden" id="action" value="delete">
-                        <input type="submit" name="button" id="button" value="確定刪除資料" class="btn btn-danger">
-                        <input type="button" name="button3" id="button3" value="回上一頁" class="btn btn-primary" onClick="window.history.back();">
-                    </p>
+                    <a href="?logout=true" class="btn btn-success" id="admin" style=" height:45px;line-height:30px;">管理員登出</p>
                 </td>
             </tr>
         </table>
-    </form>
+    </header>
 
-    
+    <!-- 頁中 -->
+    <content>
+        <form name="form1" method="post" action="">
+            <table border="0" align="center" class="table table-success table-striped" style="max-width:1200px;" cellpadding="4" cellspacing="0">
+                <tr>
+                    <td colspan="2" align="center" style="font-size:24px;color:blue;">刪除訪客留言版資料</td>
+                </tr>
+                <tr valign="top">
+                    <td>
+                        <p>
+                            <strong>姓名</strong>：<?php echo $boardname; ?>&nbsp;&nbsp;&nbsp;
+                            <strong>性別</strong>：<?php echo $boardsex; ?>
+                        </p>
+                        <p>
+                            <strong>標題</strong>：<?php echo $boardsubject; ?>
+                        </p>
+                        <p>
+                            <strong>內容</strong>：<?php echo nl2br($boardcontent); ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td align="center">
+                        <p>
+                            <input name="boardid" type="hidden" id="boardid" value="<?php echo $boardid; ?>">
+                            <input name="action" type="hidden" id="action" value="delete">
+                            <input type="submit" name="button" id="button" value="確定刪除資料" class="btn btn-danger">
+                            <input type="button" name="button3" id="button3" value="回上一頁" class="btn btn-primary" onClick="window.history.back();">
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </content>
+
 </body>
 
 </html>

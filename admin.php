@@ -12,6 +12,7 @@ if (isset($_GET['logout']) && ($_GET['logout'] == "true")) {
     header("Location:index.php");
 }
 
+// 根據boardid去找尋該筆資料
 $query_RecBoard = "SELECT boardid, boardname, boardsex, boardsubject,boardcontent FROM board WHERE boardid=?";
 $stmt = $db_link->prepare($query_RecBoard);
 $stmt->bind_param("i", $_GET["id"]);
@@ -59,67 +60,72 @@ $total_pages = ceil($total_records / $pageRow_records);
 </head>
 
 <body>
-    <div align="center">
-        <img class="bear" src="images/小熊維尼.gif" alt="" width="49" height="69">
-        <strong class="header">留言版後台</strong>
-    </div>
-
-
-
-    <table width="90%" border="0" align="center" cellpadding="4" cellspacing="0" class="table table-success table-striped container" style="max-width:1200px;">
-        <div class="row">
-            <tr>
-                <td class="col">
-                    <a href="?logout=true" class=" btn btn-success" id="admin" style="height:45px;line-height:30px;">管理員登出</p>
-                </td>
-
-                <td class="col"style="font-size:20px;">
-                    <p align="center">資料筆數：<?php echo $total_records; ?></p>
-                </td>
-
-                <td align="right" class="col">
-                    <p>
-                        <?php if ($num_pages > 1) { // 若不是第一頁則顯示 
-                        ?>
-                            <a class="text-danger" href="?page=1">第一頁</a> & <a class="text-primary" href="?page=<?php echo $num_pages - 1; ?>">上一頁</a>
-                        <?php } ?>
-                        <?php if ($num_pages < $total_pages) { // 若不是最後一頁則顯示 
-                        ?>
-                            <a class="text-danger" href="?page=<?php echo $num_pages + 1; ?>">下一頁</a> & <a class="text-primary" href="?page=<?php echo $total_pages; ?>">最末頁</a>
-                        <?php } ?>
-                    </p>
-                </td>
-            </tr>
+    <!-- 頁首 -->
+    <header>
+        <div align="center">
+            <img class="bear" src="images/小熊維尼.gif" alt="" width="49" height="69">
+            <strong class="header">留言版後台</strong>
         </div>
-    </table>
 
-    <?php while ($row_RecBoard = $RecBoard->fetch_assoc()) { ?>
-        <table width="90%" border="0" align="center" class="table table-success table-striped" style="max-width:1200px;" cellpadding="4" cellspacing="0">
-            <tr valign="top">
-                <td width="60" align="center" class="underline">
-                    <?php if ($row_RecBoard["boardsex"] == "男") {; ?>
-                        <img src="images/male.gif" alt="我是男生" width="49" height="49">
-                    <?php } else { ?>
-                        <img src="images/female.gif" alt="我是女生" width="49" height="49">
-                    <?php } ?>
-                    <br>
-                    <span class="postname"><?php echo $row_RecBoard["boardname"]; ?></span>
-                </td>
-                <td class="underline">
-                    <span class="heading" style="font-size:22px;">
-                        <font style="font-size:24px;color:blue;">主題: </font><?php echo $row_RecBoard["boardsubject"]; ?>
-                    </span>
-                    <hr>
-                    <p><?php echo nl2br($row_RecBoard["boardcontent"]); ?></p>
-                    <p align="right" class="smalltext">
-                        <?php echo $row_RecBoard["boardtime"]; ?>
-                    </p>
-                    <a class="btn btn-dark" href="adminfix.php?id=<?php echo $row_RecBoard["boardid"]; ?>">修改</a>
-                    <a class="btn btn-danger" href="admindel.php?id=<?php echo $row_RecBoard["boardid"]; ?>">刪除</a>
-                </td>
-            </tr>
+        <table border="0" align="center" cellpadding="4" cellspacing="0" class="table table-success table-striped container" style="max-width:1200px;">
+            <div class="row">
+                <tr>
+                    <td class="col">
+                        <a href="?logout=true" class="btn btn-success" id="admin" style="height:45px;line-height:30px;">管理員登出</p>
+                    </td>
+
+                    <td class="col" style="font-size:20px;">
+                        <p align="left">資料筆數：<?php echo $total_records; ?></p>
+                    </td>
+
+                    <td align="right" class="col">
+                        <p>
+                            <?php if ($num_pages > 1) { // 若不是第一頁則顯示 
+                            ?>
+                                <a class="text-danger" href="?page=1">第一頁</a> & <a class="text-primary" href="?page=<?php echo $num_pages - 1; ?>">上一頁</a>
+                            <?php } ?>
+                            <?php if ($num_pages < $total_pages) { // 若不是最後一頁則顯示 
+                            ?>
+                                <a class="text-danger" href="?page=<?php echo $num_pages + 1; ?>">下一頁</a> & <a class="text-primary" href="?page=<?php echo $total_pages; ?>">最末頁</a>
+                            <?php } ?>
+                        </p>
+                    </td>
+                </tr>
+            </div>
         </table>
-    <?php } ?>
+    </header>
+
+    <!-- 頁中 -->
+    <content>
+        <?php while ($row_RecBoard = $RecBoard->fetch_assoc()) { ?>
+            <table border="0" align="center" class="table table-success table-striped" style="max-width:1200px;" cellpadding="4" cellspacing="0">
+                <tr valign="top">
+                    <td width="60" align="center">
+                        <?php if ($row_RecBoard["boardsex"] == "男") {; ?>
+                            <img src="images/male.gif" alt="男" width="49" height="49">
+                        <?php } else { ?>
+                            <img src="images/female.gif" alt="女" width="49" height="49">
+                        <?php } ?>
+                        <br>
+                        <span><?php echo $row_RecBoard["boardname"]; ?></span>
+                    </td>
+                    <td>
+                        <span style="font-size:22px;">
+                            <font style="font-size:24px;color:blue;">主題: </font><?php echo $row_RecBoard["boardsubject"]; ?>
+                        </span>
+                        <hr>
+                        <p><?php echo nl2br($row_RecBoard["boardcontent"]); ?></p>
+                        <p align="right">
+                            <?php echo $row_RecBoard["boardtime"]; ?>
+                        </p>
+                        <a class="btn btn-dark" href="adminfix.php?id=<?php echo $row_RecBoard["boardid"]; ?>">修改</a>
+                        <a class="btn btn-danger" href="admindel.php?id=<?php echo $row_RecBoard["boardid"]; ?>">刪除</a>
+                    </td>
+                </tr>
+            </table>
+        <?php } ?>
+    </content>
+
 </body>
 
 </html>
